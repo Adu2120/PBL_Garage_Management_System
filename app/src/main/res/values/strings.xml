@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Garage Management System</string>
+    <string name="hello_world_it_s_demo">Hello World! It\'s Demo</string>
 </resources>

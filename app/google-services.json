@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "553000864686",
+    "project_id": "garage-management-system-ab763",
+    "storage_bucket": "garage-management-system-ab763.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:553000864686:android:d1bc250bf92f024da1963f",
+        "android_client_info": {
+          "package_name": "com.pbl.garagemanagementsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "553000864686-66vpv4rr5dqa4p04v7uhinmq0dpe3glo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGkG8ZELABZHRlOYAAEzSDf1FsPDUKiVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "553000864686-66vpv4rr5dqa4p04v7uhinmq0dpe3glo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

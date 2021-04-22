@@ -37,7 +37,8 @@
                 style="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:inputType="textPersonName"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +61,8 @@
                 style="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:inputType="textPersonName"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,6 +92,7 @@
                 style="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="textPersonName"
                 android:textSize="15dp" />
 
         </com.google.android.material.textfield.TextInputLayout>

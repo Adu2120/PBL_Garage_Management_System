@@ -26,7 +26,30 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JobcardActivity extends AppCompatActivity {
-    List<String> Spares = Arrays.asList("Oil", "Tyres", "Brake oil", "coolant", "tyre head", "glass", "mat change");
+    List<String> Spares = Arrays.asList(
+            "Bolt",
+            "Brake Oil",
+            "Brakes",
+            "Car Wash",
+            "Cleaning",
+            "Coolant",
+            "Cushon",
+            "Foam",
+            "Glass",
+            "Hand Brake",
+            "Head Lights",
+            "Mat Change",
+            "Mud Guard",
+            "Oil Change",
+            "Rear Mirror",
+            "Screw",
+            "Servicing",
+            "Shiner",
+            "Tires",
+            "Wind Shields",
+            "Wire",
+            "tire head"
+    );
     private ArrayList<String> mComplaintList;
     private ArrayList<String> mSpareList;
     private ComplaintAdapter mAdapter;
@@ -55,7 +78,7 @@ public class JobcardActivity extends AppCompatActivity {
 //        editCarRegNo.setEnabled(false);
 //        editMobile.setEnabled(false);
 
-        //For auto Complete the text
+        //For autoComplete the text
         AutoCompleteTextView editText = findViewById(R.id.edit_estimate_spares);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, Spares);
@@ -65,7 +88,6 @@ public class JobcardActivity extends AppCompatActivity {
         addcomp.setEndIconOnClickListener(view -> {
             //if input text is empty
             if (TextUtils.isEmpty(editComplaint.getText())) {
-                //Toast.makeText(JobcardActivity.this, "Enter complaint", Toast.LENGTH_SHORT).show();
                 addcomp.setError("Please enter complaint");
 
             } else {
@@ -169,6 +191,7 @@ public class JobcardActivity extends AppCompatActivity {
         mAdapter = new ComplaintAdapter(mComplaintList); //mComplaintList is ArrayList
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
         //Delete the Item using
         mAdapter.setOnItemClickListener(new ComplaintAdapter.OnItemClickListener() {
             @Override

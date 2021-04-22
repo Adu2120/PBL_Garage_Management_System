@@ -32,7 +32,6 @@ public class UserInfoActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         carRegNo = b.getString("carNo");
-        Toast.makeText(this, carRegNo, Toast.LENGTH_LONG).show();
         loadUser();
     }
 

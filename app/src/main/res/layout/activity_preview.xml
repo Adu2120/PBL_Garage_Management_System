@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PreviewActivity">
+
+
+    <LinearLayout
+        android:id="@+id/relativePreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_id"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Preview of Jobcard"
+            android:textSize="30sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/Header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#bdbdbd">
+
+                <TextView
+                    android:id="@+id/txt_title_spare"
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:lineSpacingExtra="1dp"
+                    android:padding="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingLeft="20dp"
+                    android:text="Spare Name"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/txt_title_Estimate"
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="1dp"
+                    android:padding="10dp"
+                    android:text="Price"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#bdbdbd">
+
+                <TextView
+                    android:id="@+id/txt_total"
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:lineSpacingExtra="1dp"
+                    android:padding="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingLeft="20dp"
+                    android:text="Total Estimate"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/txt_TotalEstimate"
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="1dp"
+                    android:padding="10dp"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Back"
+            android:onClick="back"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</ScrollView>

@@ -80,4 +80,7 @@ public class UserActivity extends AppCompatActivity {
         startActivity(new Intent(this, RegisterActivity.class));
     }
 
+    public void updateSpares(View view) {
+        startActivity(new Intent(this, UpdateSparesActivity.class));
+    }
 }

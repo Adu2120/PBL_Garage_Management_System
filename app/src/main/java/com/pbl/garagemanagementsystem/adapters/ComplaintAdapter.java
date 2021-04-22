@@ -13,10 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pbl.garagemanagementsystem.R;
-import com.pbl.garagemanagementsystem.classes.Complaint;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ComplaintViewHolder> {
-    private final ArrayList<Complaint> cComplaintList;
+    private final ArrayList<String> cComplaintList;
     private OnItemClickListener mListener;
 
     //To delete the complaint from RecyclerView
@@ -30,7 +29,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
     }
 
     //Constructor
-    public ComplaintAdapter(ArrayList<Complaint> cComplaint) {
+    public ComplaintAdapter(ArrayList<String> cComplaint) {
         this.cComplaintList = cComplaint;
     }
 
@@ -63,14 +62,13 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
 
     @Override
     public void onBindViewHolder(@NonNull ComplaintViewHolder holder, int position) {
-        Complaint currentItem = cComplaintList.get(position);
-
-        holder.text_complaint.setText(currentItem.getComplaint());
-
+        String currentItem = cComplaintList.get(position);
+        holder.text_complaint.setText(currentItem);
     }
 
     @Override
     public int getItemCount() {
         return cComplaintList.size();
     }
+
 }

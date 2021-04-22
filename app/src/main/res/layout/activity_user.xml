@@ -65,4 +65,15 @@
         android:onClick="registerUser"
         android:textAllCaps="false" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Update"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_below="@id/register_button"
+        android:layout_centerHorizontal="true"
+        android:text="@string/update_spares"
+        android:onClick="updateSpares"
+        android:textAllCaps="false" />
+
 </RelativeLayout>

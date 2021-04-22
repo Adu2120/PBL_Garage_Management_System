@@ -41,31 +41,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/registermobile_no"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/carreg_no"
-            android:layout_margin="10dp"
-            android:layout_marginTop="10dp"
-            android:hint="Mobile no">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/register_mobile_no"
-                style="@style/TextAppearance.AppCompat.Display1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_customer_complaints"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/registermobile_no"
+            android:layout_below="@id/carreg_no"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:hint="Add complaint"
@@ -151,7 +133,8 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/button_submit_jobcard"
             android:layout_toRightOf="@id/button_submit_jobcard"
-            android:text="Previous" />
+            android:text="Previous"
+            android:onClick="preview"/>
 
     </RelativeLayout>
 </ScrollView>

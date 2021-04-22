@@ -1,10 +1,12 @@
 package com.pbl.garagemanagementsystem.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -18,7 +20,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.adapters.ComplaintAdapter;
 import com.pbl.garagemanagementsystem.adapters.SpareAdapter;
-import com.pbl.garagemanagementsystem.classes.Complaint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class JobcardActivity extends AppCompatActivity {
     List<String> Spares = Arrays.asList("Oil", "Tyres", "Brake oil", "coolant", "tyre head", "glass", "mat change");
-    private ArrayList<Complaint> mComplaintList;
+    private ArrayList<String> mComplaintList;
     private ArrayList<String> mSpareList;
     private ComplaintAdapter mAdapter;
     private SpareAdapter mSpareAdapter;
@@ -42,6 +43,7 @@ public class JobcardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobcard);
+
         addmobno = findViewById(R.id.registermobile_no);
         addcomp = findViewById(R.id.tl_customer_complaints);
         addspare = findViewById(R.id.tl_estimate_spares);
@@ -135,14 +137,13 @@ public class JobcardActivity extends AppCompatActivity {
 
     //Insert Complaint In recycler view
     public void insertComplaint(String complaint) {
-        mComplaintList.add(new Complaint(complaint, carRegNo));
+        mComplaintList.add(complaint);
         mAdapter.notifyDataSetChanged();
     }
 
     public void insertSpare(String spare) {
         mSpareList.add(spare);
         mSpareAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Enterd", Toast.LENGTH_SHORT).show();
     }
 
     public void removeComplaint(int position) {
@@ -189,5 +190,11 @@ public class JobcardActivity extends AppCompatActivity {
                 removeSpare(position);
             }
         });
+    }
+
+    public void preview(View view) {
+        Intent intent = new Intent(this, PreviewActivity.class);
+        intent.putStringArrayListExtra("Spares", mSpareList);
+        startActivity(intent);
     }
 }

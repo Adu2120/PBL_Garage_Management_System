@@ -13,9 +13,9 @@
         android:background="#bdbdbd">
 
         <TextView
-            android:id="@+id/text_spare"
+            android:id="@+id/txt_spare"
             style="@style/TextAppearance.AppCompat.Display1"
-            android:layout_width="wrap_content"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:lineSpacingExtra="1dp"
@@ -26,14 +26,19 @@
             android:textSize="15sp"
             tools:ignore="RtlSymmetry" />
 
-        <ImageView
-            android:id="@+id/button_delete_spare"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <TextView
+            android:id="@+id/txt_Estimate"
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_delete" />
+            android:lineSpacingExtra="1dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:gravity="center_horizontal" />
 
     </RelativeLayout>
 

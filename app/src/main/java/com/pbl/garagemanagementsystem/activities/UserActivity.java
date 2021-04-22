@@ -42,7 +42,7 @@ public class UserActivity extends AppCompatActivity {
 
     public void findUser(View view) {
         if (isValidCarNo(etCarNo.getText().toString())) {
-            etCarNo.setError(null);
+            carregistrationno.setError(null);
             userRef.whereEqualTo("carRegNo", etCarNo.getText().toString())
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -75,7 +75,7 @@ public class UserActivity extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
         }else {
-            etCarNo.setError("Invalid Car Number.");
+            carregistrationno.setError("Invalid Car Number.");
         }
 
     }

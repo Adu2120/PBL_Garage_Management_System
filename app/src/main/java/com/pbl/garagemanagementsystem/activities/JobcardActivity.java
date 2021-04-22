@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.adapters.ComplaintAdapter;
@@ -48,7 +49,7 @@ public class JobcardActivity extends AppCompatActivity {
             "Tires",
             "Wind Shields",
             "Wire",
-            "tire head"
+            "Tire Head"
     );
     private ArrayList<String> mComplaintList;
     private ArrayList<String> mSpareList;
@@ -60,6 +61,7 @@ public class JobcardActivity extends AppCompatActivity {
     private EditText editComplaint;
     private EditText editSpare;
     private String CComplaint;
+    TextInputEditText edit_car_reg_no;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -67,6 +69,7 @@ public class JobcardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobcard);
 
+        edit_car_reg_no = findViewById(R.id.edit_car_reg_no);
         addmobno = findViewById(R.id.registermobile_no);
         addcomp = findViewById(R.id.tl_customer_complaints);
         addspare = findViewById(R.id.tl_estimate_spares);
@@ -83,6 +86,7 @@ public class JobcardActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, Spares);
         editText.setAdapter(adapter);
+        edit_car_reg_no.setText(carRegNo);
 
         //After adding element
         addcomp.setEndIconOnClickListener(view -> {

@@ -41,38 +41,42 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void findUser(View view) {
-        userRef.whereEqualTo("carRegNo", etCarNo.getText().toString())
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        Users user = documentSnapshot.toObject(Users.class);
-                        user.setCarRegNo(documentSnapshot.getId());
-                        carRegno = user.getCarRegNo();
-                        String comp = String.valueOf(etCarNo.getText());
+        if (isValidCarNo(etCarNo.getText().toString())) {
+            etCarNo.setError(null);
+            userRef.whereEqualTo("carRegNo", etCarNo.getText().toString())
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Users user = documentSnapshot.toObject(Users.class);
+                            user.setCarRegNo(documentSnapshot.getId());
+                            carRegno = user.getCarRegNo();
+                            String comp = String.valueOf(etCarNo.getText());
 
-                        //if TextField is null
-                        if (TextUtils.isEmpty(etCarNo.getText())) {
-                            carregistrationno.setError("Please enter spare");
+                            //if TextField is null
+                            if (TextUtils.isEmpty(etCarNo.getText())) {
+                                carregistrationno.setError("Please enter spare");
+                            }
+
+                            if (comp.equals(user.getCarRegNo())) {
+                                Intent intent = new Intent(UserActivity.this, UserInfoActivity.class);
+                                intent.putExtra("carNo", user.getCarRegNo());
+                                startActivity(intent);
+                                return;
+                            }
                         }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
+                        builder.setMessage("Car Not Registered.")
+                                .setPositiveButton("yes", (dialog, id) -> startActivity(new Intent(UserActivity.this, RegisterActivity.class)))
+                                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
-                        if (comp.equals(user.getCarRegNo())){
-                            Intent intent = new Intent(UserActivity.this,UserInfoActivity.class);
-                            intent.putExtra("carNo",user.getCarRegNo());
-                            startActivity(intent);
-                            return;
-                        }
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserActivity.this);
-                    builder.setMessage("Car Not Registered.")
-                            .setPositiveButton("yes", (dialog, id) -> startActivity(new Intent(UserActivity.this, RegisterActivity.class)))
-                            .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-
-                    // Create the AlertDialog object and return it
-                    builder.create();
-                    builder.show();
-                })
-                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
-
+                        // Create the AlertDialog object and return it
+                        builder.create();
+                        builder.show();
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
+        }else {
+            etCarNo.setError("Invalid Car Number.");
+        }
 
     }
 
@@ -82,5 +86,9 @@ public class UserActivity extends AppCompatActivity {
 
     public void updateSpares(View view) {
         startActivity(new Intent(this, UpdateSparesActivity.class));
+    }
+    public boolean isValidCarNo(String target) {
+        String carNoPattern = "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$";
+        return target.matches(carNoPattern) && target.length() > 0;
     }
 }

@@ -15,11 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Transaction;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.adapters.ComplaintAdapter;
 import com.pbl.garagemanagementsystem.adapters.SpareAdapter;
@@ -30,18 +25,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JobcardActivity extends AppCompatActivity {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference customerDocRef = db.collection("Users")
-            .document("MH-09-9719")
-            .collection("Jobcards")
-            .document("9LOONNrIahBCtFnBgfOQ");
-
     List<String> Spares = Arrays.asList("Oil", "Tyres", "Brake oil", "coolant", "tyre head", "glass", "mat change");
     private ArrayList<Complaint> mComplaintList;
     private ArrayList<String> mSpareList;
     private ComplaintAdapter mAdapter;
     private SpareAdapter mSpareAdapter;
 
+    private String carRegNo;
     TextInputLayout addcomp, addmobno, addspare;
     private EditText editComplaint;
     private EditText editSpare;
@@ -55,27 +45,29 @@ public class JobcardActivity extends AppCompatActivity {
         addmobno = findViewById(R.id.registermobile_no);
         addcomp = findViewById(R.id.tl_customer_complaints);
         addspare = findViewById(R.id.tl_estimate_spares);
-        EditText editMobile = findViewById(R.id.register_mobile_no);
         editComplaint = findViewById(R.id.edit_customer_complaints);
         editSpare = findViewById(R.id.edit_estimate_spares);
-        EditText editCarRegNo = findViewById(R.id.edit_car_reg_no);
+        Bundle b = getIntent().getExtras();
+        carRegNo = b.getString("carRegNo");
 //
 //        editCarRegNo.setEnabled(false);
 //        editMobile.setEnabled(false);
 
-
+        //For auto Complete the text
         AutoCompleteTextView editText = findViewById(R.id.edit_estimate_spares);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, Spares);
         editText.setAdapter(adapter);
 
+        //After adding element
         addcomp.setEndIconOnClickListener(view -> {
-
+            //if input text is empty
             if (TextUtils.isEmpty(editComplaint.getText())) {
-                Toast.makeText(JobcardActivity.this, "Enter complaint", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(JobcardActivity.this, "Enter complaint", Toast.LENGTH_SHORT).show();
                 addcomp.setError("Please enter complaint");
 
             } else {
+                //after adding text field should be empty
                 addcomp.setError(null);
                 CComplaint = editComplaint.getText().toString();
                 insertComplaint(CComplaint);
@@ -84,18 +76,22 @@ public class JobcardActivity extends AppCompatActivity {
 
         });
 
+        //After adding element
         addspare.setEndIconOnClickListener(view -> {
+            //if input text is empty
             if (TextUtils.isEmpty(editSpare.getText())) {
                 Toast.makeText(JobcardActivity.this, "Enter Spare", Toast.LENGTH_SHORT).show();
                 addspare.setError("Please enter spare");
 
             } else {
+                //after adding text field should be empty
                 addspare.setError(null);
                 insertSpare(editSpare.getText().toString());
                 editSpare.setText("");
             }
         });
 
+        //for autocomplete the text
         editComplaint.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -113,6 +109,8 @@ public class JobcardActivity extends AppCompatActivity {
 
             }
         });
+
+        //for autocomplete the text
         editSpare.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -133,51 +131,12 @@ public class JobcardActivity extends AppCompatActivity {
 
         createLists();
         buildRecyclerView();
-        getEstimate();
-
     }
 
-
+    //Insert Complaint In recycler view
     public void insertComplaint(String complaint) {
-        mComplaintList.add(new Complaint(complaint));
+        mComplaintList.add(new Complaint(complaint, carRegNo));
         mAdapter.notifyDataSetChanged();
-        updateEstimate();
-    }
-
-    public void getEstimate() {
-        customerDocRef.get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String TotalEstimate = documentSnapshot.getString("Total estimate");
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-
-                });
-    }
-
-    public void updateEstimate() {
-
-        for (int i = 0; i < mSpareList.size(); i++) {
-            final DocumentReference spareDocRef = db.collection("Inventory").document(mSpareList.get(i));
-
-            db.runTransaction((Transaction.Function<Void>) transaction -> {
-                DocumentSnapshot snapshot = transaction.get(spareDocRef);
-
-                // Note: this could be done without a transaction
-                //       by updating the population using FieldValue.increment()
-                int totalEstimate = (int) snapshot.get("price");
-                transaction.update(customerDocRef, "Total estimate", FieldValue.increment(totalEstimate));
-
-                // Success
-                return null;
-            }).addOnSuccessListener(aVoid -> {
-            })
-                    .addOnFailureListener(e -> {
-                    });
-        }
-
     }
 
     public void insertSpare(String spare) {
@@ -202,20 +161,14 @@ public class JobcardActivity extends AppCompatActivity {
     }
 
     public void buildRecyclerView() {
+        //Complaint RecyclerView
         RecyclerView mRecyclerView = findViewById(R.id.list_customer_complaints);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ComplaintAdapter(mComplaintList);
+        mAdapter = new ComplaintAdapter(mComplaintList); //mComplaintList is ArrayList
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-
-        RecyclerView mSpareRecyclerView = findViewById(R.id.list_estimate_spares);
-        mSpareRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mSpareLayoutManager = new LinearLayoutManager(this);
-        mSpareAdapter = new SpareAdapter(mSpareList);
-        mSpareRecyclerView.setLayoutManager(mSpareLayoutManager);
-        mSpareRecyclerView.setAdapter(mSpareAdapter);
-
+        //Delete the Item using
         mAdapter.setOnItemClickListener(new ComplaintAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position) {
@@ -223,6 +176,13 @@ public class JobcardActivity extends AppCompatActivity {
             }
         });
 
+        //Spare RecyclerView
+        RecyclerView mSpareRecyclerView = findViewById(R.id.list_estimate_spares);
+        mSpareRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager mSpareLayoutManager = new LinearLayoutManager(this);
+        mSpareAdapter = new SpareAdapter(mSpareList); //mSpareList is ArrayList
+        mSpareRecyclerView.setLayoutManager(mSpareLayoutManager);
+        mSpareRecyclerView.setAdapter(mSpareAdapter);
         mSpareAdapter.setOnItemClickListener(new SpareAdapter.OnItemClickListener() {
             @Override
             public void onClickDelete(int position) {

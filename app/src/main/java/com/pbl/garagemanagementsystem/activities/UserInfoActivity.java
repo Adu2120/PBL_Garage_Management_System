@@ -1,6 +1,5 @@
 package com.pbl.garagemanagementsystem.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,19 +8,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.classes.Users;
 
 public class UserInfoActivity extends AppCompatActivity {
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String carRegNo,carRegno, customerName, mobileNo, email;
+    String carRegNo, customerName, mobileNo, email;
     CollectionReference userRef = db.collection("Users");
     TextView CustomerName, Mobileno, CarRegNo;
 
@@ -43,34 +39,28 @@ public class UserInfoActivity extends AppCompatActivity {
     public void loadUser() {
         userRef.whereEqualTo("carRegNo", carRegNo)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                .addOnSuccessListener(queryDocumentSnapshots -> {
 
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Users user = documentSnapshot.toObject(Users.class);
-                            user.setCarRegNo(documentSnapshot.getId());
-                            carRegno = user.getCarRegNo();
-                            customerName = user.getCustomerName();
-                            mobileNo = user.getMobileNo();
-                            email = user.getEmail();
-                        }
-                        CustomerName.setText(customerName);
-                        CarRegNo.setText(carRegNo);
-                        Mobileno.setText(mobileNo);
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Users user = documentSnapshot.toObject(Users.class);
+                        user.setCarRegNo(documentSnapshot.getId());
+                        carRegNo = user.getCarRegNo();
+                        customerName = user.getCustomerName();
+                        mobileNo = user.getMobileNo();
+                        email = user.getEmail();
                     }
+                    CustomerName.setText(customerName);
+                    CarRegNo.setText(carRegNo);
+                    Mobileno.setText(mobileNo);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show();
-                    }
-                });
-        ;
+                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
+
 
     }
 
     public void newJobCard(View view) {
-        startActivity(new Intent(this, JobcardActivity.class));
+        Intent intent = new Intent(this, JobcardActivity.class);
+        intent.putExtra("carRegNo", carRegNo);
+        startActivity(intent);
     }
 }

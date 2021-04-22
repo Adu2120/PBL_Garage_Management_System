@@ -29,7 +29,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_customer_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,7 +47,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_mobile_no"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="phone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +65,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +83,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_car_reg_no"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

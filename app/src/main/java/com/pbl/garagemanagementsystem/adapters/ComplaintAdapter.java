@@ -3,7 +3,6 @@ package com.pbl.garagemanagementsystem.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,22 +16,25 @@ import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.classes.Complaint;
 
 public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ComplaintViewHolder> {
-    private ArrayList<Complaint> cComplaintList;
+    private final ArrayList<Complaint> cComplaintList;
     private OnItemClickListener mListener;
 
+    //To delete the complaint from RecyclerView
     public interface OnItemClickListener {
         void onDeleteClick(int position);
     }
 
+    //set the listener for above interface
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
 
+    //Constructor
     public ComplaintAdapter(ArrayList<Complaint> cComplaint) {
         this.cComplaintList = cComplaint;
     }
 
-    public class ComplaintViewHolder extends RecyclerView.ViewHolder {
+    public static class ComplaintViewHolder extends RecyclerView.ViewHolder {
         public TextView text_complaint;
         public ImageView delete_complaint;
 
@@ -41,14 +43,11 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
             text_complaint = itemView.findViewById(R.id.text_complaint);
             delete_complaint = itemView.findViewById(R.id.button_delete_complaint);
 
-            delete_complaint.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            listener.onDeleteClick(position);
-                        }
+            delete_complaint.setOnClickListener(view -> {
+                if (listener != null){
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        listener.onDeleteClick(position);
                     }
                 }
             });
@@ -59,15 +58,14 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
     @Override
     public ComplaintViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint, parent, false);
-        ComplaintViewHolder complaintViewHolder = new ComplaintViewHolder(view, mListener);
-        return complaintViewHolder;
+        return new ComplaintViewHolder(view, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ComplaintViewHolder holder, int position) {
         Complaint currentItem = cComplaintList.get(position);
 
-        holder.text_complaint.setText(currentItem.getcComplaint());
+        holder.text_complaint.setText(currentItem.getComplaint());
 
     }
 

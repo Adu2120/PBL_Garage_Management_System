@@ -3,7 +3,6 @@ package com.pbl.garagemanagementsystem.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,22 +15,25 @@ import com.pbl.garagemanagementsystem.R;
 
 public class SpareAdapter extends RecyclerView.Adapter<SpareAdapter.SpareViewHolder> {
 
-    private ArrayList<String> cSpareList;
+    private final ArrayList<String> cSpareList;
     private OnItemClickListener sListener;
 
+    //To delete the complaint from RecyclerView
     public interface OnItemClickListener {
         void onClickDelete(int position);
     }
 
-    public void setOnItemClickListener(SpareAdapter.OnItemClickListener slistener) {
+    //set the listener for above interface
+    public void setOnItemClickListener(OnItemClickListener slistener) {
         sListener = slistener;
     }
 
+    //Constructor
     public SpareAdapter(ArrayList<String> cSpare) {
         this.cSpareList = cSpare;
     }
 
-    public class SpareViewHolder extends RecyclerView.ViewHolder {
+    public static class SpareViewHolder extends RecyclerView.ViewHolder {
         public TextView text_spare;
         public ImageView delete_spare;
 
@@ -40,14 +42,11 @@ public class SpareAdapter extends RecyclerView.Adapter<SpareAdapter.SpareViewHol
             text_spare = itemView.findViewById(R.id.text_spare);
             delete_spare = itemView.findViewById(R.id.button_delete_spare);
 
-            delete_spare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (slistener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            slistener.onClickDelete(position);
-                        }
+            delete_spare.setOnClickListener(view -> {
+                if (slistener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        slistener.onClickDelete(position);
                     }
                 }
             });
@@ -59,8 +58,7 @@ public class SpareAdapter extends RecyclerView.Adapter<SpareAdapter.SpareViewHol
     @Override
     public SpareViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.estimate_spare, parent, false);
-        SpareViewHolder spareViewHolder = new SpareViewHolder(view, sListener);
-        return spareViewHolder;
+        return new SpareViewHolder(view, sListener);
     }
 
     @Override

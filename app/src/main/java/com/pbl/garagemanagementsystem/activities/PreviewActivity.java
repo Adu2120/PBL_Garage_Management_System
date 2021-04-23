@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 public class PreviewActivity extends AppCompatActivity implements OnCompleteListener<QuerySnapshot> {
 
-    FirebaseFirestore db;
     ArrayList<String> spares;
+    FirebaseFirestore db;
     int num;
     int[] cost;
     int totalEstimate = 0;

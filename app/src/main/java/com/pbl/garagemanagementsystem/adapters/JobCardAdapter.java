@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pbl.garagemanagementsystem.R;
 
-public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.ComplaintViewHolder> {
+public class JobCardAdapter extends RecyclerView.Adapter<JobCardAdapter.ComplaintViewHolder> {
     private final ArrayList<String> cComplaintList;
     private OnItemClickListener mListener;
 
@@ -29,7 +29,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
     }
 
     //Constructor
-    public ComplaintAdapter(ArrayList<String> cComplaint) {
+    public JobCardAdapter(ArrayList<String> cComplaint) {
         this.cComplaintList = cComplaint;
     }
 
@@ -39,8 +39,8 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
 
         public ComplaintViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            text_complaint = itemView.findViewById(R.id.text_complaint);
-            delete_complaint = itemView.findViewById(R.id.button_delete_complaint);
+            text_complaint = itemView.findViewById(R.id.text);
+            delete_complaint = itemView.findViewById(R.id.button_delete);
 
             delete_complaint.setOnClickListener(view -> {
                 if (listener != null){
@@ -56,7 +56,7 @@ public class ComplaintAdapter extends RecyclerView.Adapter<ComplaintAdapter.Comp
     @NonNull
     @Override
     public ComplaintViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.complaint, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.job_card_view, parent, false);
         return new ComplaintViewHolder(view, mListener);
     }
 

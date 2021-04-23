@@ -15,13 +15,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Intent intent = new Intent(this, UserActivity.class);
-        new Handler().postDelayed(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          startActivity(intent);
-                                          finish();
-                                      }
-                                  }
+        //Implemented Runnable using Lambda Notation
+        new Handler().postDelayed(() -> {
+            startActivity(intent);
+            finish();
+        }
                 , 3000);
     }
 }

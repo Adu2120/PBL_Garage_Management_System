@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:text="Customer Registration"
+        android:text="@string/customer_registration"
         android:textSize="30sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -24,7 +24,7 @@
         android:layout_below="@id/text_view_id"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:hint="Customer Name">
+        android:hint="@string/customer_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_customer_name"
@@ -42,7 +42,7 @@
         android:layout_below="@id/registercustomer_name"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:hint="Mobile no">
+        android:hint="@string/mobile_no">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_mobile_no"
@@ -60,7 +60,7 @@
         android:layout_below="@id/registermobile_no"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:hint="Email ID">
+        android:hint="@string/email_id">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_email"
@@ -78,7 +78,7 @@
         android:layout_below="@id/registeremail"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:hint="Car registration no">
+        android:hint="@string/car_registration_no">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_car_reg_no"
@@ -96,6 +96,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:onClick="registerUser"
-        android:text="Register" />
+        android:text="@string/register" />
 
 </RelativeLayout>

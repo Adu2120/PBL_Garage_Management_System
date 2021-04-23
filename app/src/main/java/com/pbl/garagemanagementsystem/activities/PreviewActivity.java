@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -24,12 +25,13 @@ import java.util.ArrayList;
 
 public class PreviewActivity extends AppCompatActivity implements OnCompleteListener<QuerySnapshot> {
 
-    ArrayList<String> spares;
     FirebaseFirestore db;
+    ArrayList<String> spares;
     int num;
     int[] cost;
     int totalEstimate = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,23 +53,23 @@ public class PreviewActivity extends AppCompatActivity implements OnCompleteList
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        new Handler().postDelayed(new Runnable() {
-                                      @Override
-                                      public void run() {
 
-                                          PreviewAdapter adapter = new PreviewAdapter(spares, cost);
-                                          recyclerView.setAdapter(adapter);
+        Toast.makeText(this, "Please Wait for 3 Second.", Toast.LENGTH_SHORT).show();
+        //Implemented Runnable using Lambda Notation
+        new Handler().postDelayed(() -> {
 
-                                          adapter.notifyDataSetChanged();
+            PreviewAdapter adapter = new PreviewAdapter(spares, cost);
+            recyclerView.setAdapter(adapter);
 
-                                          for (int i : cost){
-                                              totalEstimate += i;
-                                          }
+            adapter.notifyDataSetChanged();
 
-                                          TextView txt_TotalEstimate = findViewById(R.id.txt_TotalEstimate);
-                                          txt_TotalEstimate.setText(""+totalEstimate);
-                                      }
-                                  }
+            for (int i : cost){
+                totalEstimate += i;
+            }
+
+            TextView txt_TotalEstimate = findViewById(R.id.txt_TotalEstimate);
+            txt_TotalEstimate.setText(""+totalEstimate);
+        }
                 , 3000);
 
     }

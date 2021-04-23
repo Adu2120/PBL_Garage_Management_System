@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.UserActivity">
 
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_search_customer"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
         android:id="@+id/title_find_customer"
+        android:layout_below="@id/searchIcon"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text="Find Customer"
+        android:text="@string/find_customer"
         android:textSize="30sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -24,7 +32,7 @@
         android:layout_below="@id/title_find_customer"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:hint="Car registration no">
+        android:hint="@string/car_registration_no">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/car_registration_no"
@@ -43,7 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:onClick="findUser"
-        android:text="Find Customer" />
+        android:text="@string/find_customer" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,7 +59,7 @@
         android:layout_below="@id/find_user_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Customer not found??" />
+        android:text="@string/customer_not_found" />
 
     <Button
         android:id="@+id/register_button"
@@ -61,19 +69,19 @@
         android:layout_below="@id/find_user_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Register"
         android:onClick="registerUser"
+        android:text="@string/register"
         android:textAllCaps="false" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/Update"
         style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/register_button"
         android:layout_centerHorizontal="true"
-        android:text="@string/update_spares"
         android:onClick="updateSpares"
+        android:text="@string/update_spares"
         android:textAllCaps="false" />
 
 </RelativeLayout>

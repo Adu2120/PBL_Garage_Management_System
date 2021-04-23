@@ -37,6 +37,7 @@ public class UpdateSparesActivity extends AppCompatActivity {
         userRef = db.collection("Inventory").document(spares);
         Spares spares1 = new Spares(spares, amount);
         userRef.set(spares1)
+                //Implemented this OnSuccessListener using Lambda Notation
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(
                             UpdateSparesActivity.this,
@@ -46,12 +47,11 @@ public class UpdateSparesActivity extends AppCompatActivity {
                     spareName.setText(null);
                     spare_Amount.setText(null);
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(
-                            UpdateSparesActivity.this,
-                            "Something went wrong !",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                });
+                //Implemented this OnFailureListener using Lambda Notation
+                .addOnFailureListener(e -> Toast.makeText(
+                        UpdateSparesActivity.this,
+                        "Something went wrong !",
+                        Toast.LENGTH_SHORT
+                ).show());
     }
 }

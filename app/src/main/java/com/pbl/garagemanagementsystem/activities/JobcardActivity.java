@@ -26,8 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pbl.garagemanagementsystem.R;
-import com.pbl.garagemanagementsystem.adapters.ComplaintAdapter;
-import com.pbl.garagemanagementsystem.adapters.SpareAdapter;
+import com.pbl.garagemanagementsystem.adapters.JobCardAdapter;
 import com.pbl.garagemanagementsystem.classes.JobCard;
 import com.pbl.garagemanagementsystem.classes.Spares;
 
@@ -69,8 +68,8 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
     int totalEstimate = 0;
     private ArrayList<String> mComplaintList;
     private ArrayList<String> mSpareList;
-    private ComplaintAdapter mAdapter;
-    private SpareAdapter mSpareAdapter;
+    private JobCardAdapter mAdapter;
+    private JobCardAdapter mSpareAdapter;
 
     private String carRegNo;
     TextInputLayout addcomp, addmobno, addspare;
@@ -107,7 +106,7 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         edit_car_reg_no.setText(carRegNo);
 
         //After adding element
-        addcomp.setEndIconOnClickListener(view -> {
+        addcomp.setEndIconOnClickListener(view -> { //Implemented this OnClickListener using Lambda Notation
             //if input text is empty
             if (TextUtils.isEmpty(editComplaint.getText())) {
                 addcomp.setError("Please enter complaint");
@@ -123,7 +122,7 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         });
 
         //After adding element
-        addspare.setEndIconOnClickListener(view -> {
+        addspare.setEndIconOnClickListener(view -> { //Implemented this OnClickListener using Lambda Notation
             //if input text is empty
             if (TextUtils.isEmpty(editSpare.getText())) {
                 Toast.makeText(JobcardActivity.this, "Enter Spare", Toast.LENGTH_SHORT).show();
@@ -219,12 +218,13 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         RecyclerView mRecyclerView = findViewById(R.id.list_customer_complaints);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ComplaintAdapter(mComplaintList); //mComplaintList is ArrayList
+        mAdapter = new JobCardAdapter(mComplaintList); //mComplaintList is ArrayList
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         //Delete the Item using
-        mAdapter.setOnItemClickListener(new ComplaintAdapter.OnItemClickListener() {
+        //Implemented this JobCardAdapter.OnItemClickListener() using Lambda Notation
+        mAdapter.setOnItemClickListener(new JobCardAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position) {
                 removeComplaint(position);
@@ -235,12 +235,12 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         RecyclerView mSpareRecyclerView = findViewById(R.id.list_estimate_spares);
         mSpareRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mSpareLayoutManager = new LinearLayoutManager(this);
-        mSpareAdapter = new SpareAdapter(mSpareList); //mSpareList is ArrayList
+        mSpareAdapter = new JobCardAdapter(mSpareList); //mSpareList is ArrayList
         mSpareRecyclerView.setLayoutManager(mSpareLayoutManager);
         mSpareRecyclerView.setAdapter(mSpareAdapter);
-        mSpareAdapter.setOnItemClickListener(new SpareAdapter.OnItemClickListener() {
+        mSpareAdapter.setOnItemClickListener(new JobCardAdapter.OnItemClickListener() {
             @Override
-            public void onClickDelete(int position) {
+            public void onDeleteClick(int position) {
                 removeSpare(position);
             }
         });
@@ -290,19 +290,15 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         JobCard jc = new JobCard(carRegNo, date, mComplaintList, mSpareList, totalEstimate);
         db.collection("JobCard").document(date)
                 .set(jc)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(
-                            JobcardActivity.this,
-                            "User registered",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(
-                            JobcardActivity.this,
-                            "Something went wrong !",
-                            Toast.LENGTH_SHORT
-                    ).show();
-                });
+                .addOnSuccessListener(aVoid -> Toast.makeText(
+                        JobcardActivity.this,
+                        "User registered",
+                        Toast.LENGTH_SHORT
+                ).show())
+                .addOnFailureListener(e -> Toast.makeText(
+                        JobcardActivity.this,
+                        "Something went wrong !",
+                        Toast.LENGTH_SHORT
+                ).show());
     }
 }

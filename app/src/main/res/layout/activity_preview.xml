@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="15dp"
             android:layout_marginTop="20dp"
-            android:text="Preview of Jobcard"
+            android:text="@string/preview_of_jobcard"
             android:textSize="30sp" />
 
         <com.google.android.material.card.MaterialCardView
@@ -44,7 +44,7 @@
                     android:padding="10dp"
                     android:paddingStart="20dp"
                     android:paddingLeft="20dp"
-                    android:text="Spare Name"
+                    android:text="@string/spare_name"
                     android:textColor="#000"
                     android:textSize="15sp"
                     tools:ignore="RtlSymmetry" />
@@ -59,7 +59,7 @@
                     android:gravity="center_horizontal"
                     android:lineSpacingExtra="1dp"
                     android:padding="10dp"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="15sp"
@@ -97,7 +97,7 @@
                     android:padding="10dp"
                     android:paddingStart="20dp"
                     android:paddingLeft="20dp"
-                    android:text="Total Estimate"
+                    android:text="@string/total_estimate"
                     android:textColor="#000"
                     android:textSize="15sp"
                     tools:ignore="RtlSymmetry" />
@@ -112,7 +112,7 @@
                     android:gravity="center_horizontal"
                     android:lineSpacingExtra="1dp"
                     android:padding="10dp"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="15sp"
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Back"
+            android:text="@string/back"
             android:onClick="back"
             android:layout_marginTop="10dp"/>
     </LinearLayout>

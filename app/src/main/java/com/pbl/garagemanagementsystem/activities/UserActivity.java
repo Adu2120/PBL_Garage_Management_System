@@ -1,26 +1,19 @@
 package com.pbl.garagemanagementsystem.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.classes.Users;
 
@@ -45,7 +38,7 @@ public class UserActivity extends AppCompatActivity {
             carregistrationno.setError(null);
             userRef.whereEqualTo("carRegNo", etCarNo.getText().toString())
                     .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                    .addOnSuccessListener(queryDocumentSnapshots -> { //Implemented this OnSuccessListener using Lambda Notation
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             Users user = documentSnapshot.toObject(Users.class);
                             user.setCarRegNo(documentSnapshot.getId());
@@ -73,6 +66,7 @@ public class UserActivity extends AppCompatActivity {
                         builder.create();
                         builder.show();
                     })
+                    //Implemented this OnFailureListener using Lambda Notation
                     .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
         }else {
             carregistrationno.setError("Invalid Car Number.");

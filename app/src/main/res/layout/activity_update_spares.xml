@@ -11,7 +11,8 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/ic_spare" />
+        android:src="@drawable/ic_spare"
+        android:contentDescription="@string/tools" />
 
     <TextView
         android:id="@+id/text_view_id"
@@ -21,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:text="Update Spare Details"
+        android:text="@string/update_spare_details"
         android:textSize="30sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -32,7 +33,7 @@
         android:layout_below="@id/text_view_id"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:hint="Spare Name">
+        android:hint="@string/spare_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_spare_name"
@@ -50,7 +51,7 @@
         android:layout_below="@id/til_spare_name"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:hint="Spare Estimate">
+        android:hint="@string/spare_estimate">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_spare_amount"
@@ -68,5 +69,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="update"
-        android:text="Update" />
+        android:text="@string/update" />
 </RelativeLayout>

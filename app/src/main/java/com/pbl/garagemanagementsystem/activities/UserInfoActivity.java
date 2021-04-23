@@ -19,7 +19,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     String carRegNo, customerName, mobileNo, email;
     CollectionReference userRef = db.collection("Users");
-    TextView CustomerName, Mobileno, CarRegNo;
+    TextView CustomerName, Mobileno, CarRegNo, txtemail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,7 @@ public class UserInfoActivity extends AppCompatActivity {
         CustomerName = findViewById(R.id.customer_name);
         Mobileno = findViewById(R.id.mobile_no);
         CarRegNo = findViewById(R.id.user_car_registration_no);
+        txtemail = findViewById(R.id.user_email);
 
         Bundle b = getIntent().getExtras();
         carRegNo = b.getString("carNo");
@@ -38,7 +39,7 @@ public class UserInfoActivity extends AppCompatActivity {
     public void loadUser() {
         userRef.whereEqualTo("carRegNo", carRegNo)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
+                .addOnSuccessListener(queryDocumentSnapshots -> { //Implemented this OnSuccessListener using Lambda Notation
 
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         Users user = documentSnapshot.toObject(Users.class);
@@ -51,7 +52,9 @@ public class UserInfoActivity extends AppCompatActivity {
                     CustomerName.setText(customerName);
                     CarRegNo.setText(carRegNo);
                     Mobileno.setText(mobileNo);
+                    txtemail.setText(email);
                 })
+                //Implemented this OnFailureListener using Lambda Notation
                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error To Fetch Data", Toast.LENGTH_LONG).show());
 
 
@@ -59,6 +62,12 @@ public class UserInfoActivity extends AppCompatActivity {
 
     public void newJobCard(View view) {
         Intent intent = new Intent(this, JobcardActivity.class);
+        intent.putExtra("carRegNo", carRegNo);
+        startActivity(intent);
+    }
+
+    public void previous(View view) {
+        Intent intent = new Intent(this, PreviousServicesActivity.class);
         intent.putExtra("carRegNo", carRegNo);
         startActivity(intent);
     }

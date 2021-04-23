@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.classes.Users;
 
@@ -48,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (isValidCarNo(carRegNo)) {
             Users user = new Users(customerName, mobileNo, email, carRegNo);
             userRef.set(user)
-                    .addOnSuccessListener(aVoid -> {
+                    .addOnSuccessListener(aVoid -> { //Implemented this OnSuccessListener using Lambda Notation
                         Toast.makeText(
                                 RegisterActivity.this,
                                 "User registered",
@@ -58,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // startActivity(new Intent(RegisterActivity.this, UserActivity.class));
                         finish();
                     })
-                    .addOnFailureListener(e -> {
+                    .addOnFailureListener(e -> { //Implemented this OnFailureListener using Lambda Notation
                         Toast.makeText(
                                 RegisterActivity.this,
                                 "Something went wrong !",

@@ -17,9 +17,10 @@ import java.util.Objects;
 public class UpdateSparesActivity extends AppCompatActivity {
 
     public String spares, amount;
+    int quantity;
     FirebaseFirestore db;
     DocumentReference userRef;
-    TextInputEditText spareName, spare_Amount;
+    TextInputEditText spareName, spare_Amount, spare_quantity ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,16 @@ public class UpdateSparesActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         spareName = findViewById(R.id.tiet_spare_name);
         spare_Amount = findViewById(R.id.tiet_spare_amount);
+        spare_quantity = findViewById(R.id.tiet_quantity);
     }
 
     public void update(View view) {
         spares = Objects.requireNonNull(spareName.getText()).toString();
         amount = Objects.requireNonNull(spare_Amount.getText()).toString();
+        quantity = Integer.parseInt(Objects.requireNonNull(spare_quantity.getText()).toString());
 
         userRef = db.collection("Inventory").document(spares);
-        Spares spares1 = new Spares(spares, amount);
+        Spares spares1 = new Spares(spares, amount, quantity);
         userRef.set(spares1)
                 //Implemented this OnSuccessListener using Lambda Notation
                 .addOnSuccessListener(aVoid -> {
@@ -46,6 +49,7 @@ public class UpdateSparesActivity extends AppCompatActivity {
                     ).show();
                     spareName.setText(null);
                     spare_Amount.setText(null);
+                    spare_quantity.setText(null);
                 })
                 //Implemented this OnFailureListener using Lambda Notation
                 .addOnFailureListener(e -> Toast.makeText(

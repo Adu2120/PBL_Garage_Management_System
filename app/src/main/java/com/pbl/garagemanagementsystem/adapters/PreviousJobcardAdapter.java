@@ -1,24 +1,47 @@
 package com.pbl.garagemanagementsystem.adapters;
 
+import android.os.Build;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.itextpdf.text.DocumentException;
 import com.pbl.garagemanagementsystem.R;
+import com.pbl.garagemanagementsystem.classes.PDFGeneration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcardAdapter.PreviousHolder> {
+public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcardAdapter.PreviousHolder> implements OnCompleteListener<QuerySnapshot> {
     ArrayList<ArrayList<String>> complaint;
+    ArrayList<ArrayList<String>> spares;
     ArrayList<String> date;
+    ArrayList<Integer> totalEstimate;
+    String carRegNo;
+    String name, phone, email;
+    PDFGeneration pdfGeneration;
 
-    public PreviousJobcardAdapter(ArrayList<ArrayList<String>> complaint, ArrayList<String> date) {
+
+
+    public PreviousJobcardAdapter(ArrayList<ArrayList<String>> complaint, ArrayList<ArrayList<String>> spares, ArrayList<String> date, ArrayList<Integer> totalEstimate, String carRegNo, String name, String phone, String email) {
         this.complaint = complaint;
+        this.spares = spares;
         this.date = date;
+        this.totalEstimate = totalEstimate;
+        this.carRegNo = carRegNo;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
     }
 
     @NonNull
@@ -35,6 +58,25 @@ public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcard
         String complaint3 = complaint1.get(0);
         holder.date2.setText(date1);
         holder.complaint2.setText(complaint3);
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                pdfGeneration = new PDFGeneration(name, email, phone, carRegNo, date.get(position),spares.get(position), complaint1);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            pdfGeneration.GeneratePDF();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (DocumentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 2000);
+            }
+        });
     }
 
     @Override
@@ -42,15 +84,22 @@ public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcard
         return complaint.size();
     }
 
+    @Override
+    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+    }
+
     public class PreviousHolder extends RecyclerView.ViewHolder {
 
         public TextView complaint2;
         public TextView date2;
+        public Button btn;
 
         public PreviousHolder(@NonNull View itemView) {
             super(itemView);
             date2 = itemView.findViewById(R.id.txt_Date);
             complaint2 = itemView.findViewById(R.id.txt_complaint);
+            btn = itemView.findViewById(R.id.view_pdf);
         }
     }
 }

@@ -2,14 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pbl.garagemanagementsystem">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GarageManagementSystem">
-        <activity android:name=".activities.PreviewActivity"></activity>
+        <activity android:name=".activities.PreviewActivity" />
         <activity android:name=".activities.UpdateSparesActivity" />
         <activity android:name=".activities.PreviousServicesActivity" />
         <activity android:name=".activities.JobcardActivity" />

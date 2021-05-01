@@ -1,7 +1,9 @@
 package com.pbl.garagemanagementsystem.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,11 +33,20 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         etCarNo = findViewById(R.id.car_registration_no);
         carregistrationno = findViewById(R.id.carregistrationno);
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, 200
+        );
     }
 
     public void findUser(View view) {
         if (isValidCarNo(etCarNo.getText().toString())) {
             carregistrationno.setError(null);
+            //Search car no in database
             userRef.whereEqualTo("carRegNo", etCarNo.getText().toString())
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> { //Implemented this OnSuccessListener using Lambda Notation
@@ -47,7 +58,7 @@ public class UserActivity extends AppCompatActivity {
 
                             //if TextField is null
                             if (TextUtils.isEmpty(etCarNo.getText())) {
-                                carregistrationno.setError("Please enter spare");
+                                carregistrationno.setError("Please enter Car No");
                             }
 
                             if (comp.equals(user.getCarRegNo())) {

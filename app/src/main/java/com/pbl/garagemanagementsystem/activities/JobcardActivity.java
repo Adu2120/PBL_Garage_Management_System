@@ -2,6 +2,7 @@ package com.pbl.garagemanagementsystem.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,11 +27,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.itextpdf.text.DocumentException;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.adapters.JobCardAdapter;
 import com.pbl.garagemanagementsystem.classes.JobCard;
+import com.pbl.garagemanagementsystem.classes.PDFGeneration;
 import com.pbl.garagemanagementsystem.classes.Spares;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +68,7 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
             "Tire Head"
     );
     FirebaseFirestore db;
+    PDFGeneration pdfGeneration;
     int num;
     int[] cost;
     int totalEstimate = 0;
@@ -71,7 +77,7 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
     private JobCardAdapter mAdapter;
     private JobCardAdapter mSpareAdapter;
 
-    private String carRegNo;
+    private String carRegNo, name, phone, email, date;
     TextInputLayout addcomp, addmobno, addspare;
     private EditText editComplaint;
     private EditText editSpare;
@@ -94,6 +100,9 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         editSpare = findViewById(R.id.edit_estimate_spares);
         Bundle b = getIntent().getExtras();
         carRegNo = b.getString("carRegNo");
+        name = b.getString("name");
+        phone = b.getString("phone");
+        email = b.getString("email");
 //
 //        editCarRegNo.setEnabled(false);
 //        editMobile.setEnabled(false);
@@ -275,30 +284,43 @@ public class JobcardActivity extends AppCompatActivity implements OnCompleteList
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void submit(View view) {
         num = mSpareList.size();
         cost = new int[num];
         db.collection("Inventory")
                 .get()
                 .addOnCompleteListener(this);
+        date = current_Date();
+        pdfGeneration = new PDFGeneration(name, email, phone, carRegNo, date, mSpareList, mComplaintList);
         new Handler().postDelayed(this,3000);
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void run() {
-        String date = current_Date();
         JobCard jc = new JobCard(carRegNo, date, mComplaintList, mSpareList, totalEstimate);
         db.collection("JobCard").document(date)
                 .set(jc)
-                .addOnSuccessListener(aVoid -> Toast.makeText(
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(
                         JobcardActivity.this,
-                        "User registered",
+                        "Job card Added to Database",
                         Toast.LENGTH_SHORT
-                ).show())
+                    ).show();
+                })
                 .addOnFailureListener(e -> Toast.makeText(
                         JobcardActivity.this,
                         "Something went wrong !",
                         Toast.LENGTH_SHORT
                 ).show());
+        try {
+            pdfGeneration.GeneratePDF();
+        } catch (IOException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (DocumentException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

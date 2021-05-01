@@ -36,7 +36,8 @@
         </LinearLayout>
         <Button
             android:id="@+id/view_pdf"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
+            android:textSize="10sp"
             android:layout_height="wrap_content"
             android:text="@string/view_pdf"
             android:layout_alignParentRight="true"
@@ -44,7 +45,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
-            tools:ignore="RelativeOverlap"/>
+            tools:ignore="RelativeOverlap,SmallSp"/>
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

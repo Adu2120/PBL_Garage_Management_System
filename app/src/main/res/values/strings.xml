@@ -33,4 +33,5 @@
     <string name="date">Date</string>
     <string name="complaint">Complaint</string>
     <string name="spare_quantity">Spare Quantity</string>
+    <string name="preview">Preview</string>
 </resources>

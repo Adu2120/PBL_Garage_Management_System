@@ -1,6 +1,9 @@
 package com.pbl.garagemanagementsystem.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +23,7 @@ import com.itextpdf.text.DocumentException;
 import com.pbl.garagemanagementsystem.R;
 import com.pbl.garagemanagementsystem.classes.PDFGeneration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,10 +35,10 @@ public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcard
     String carRegNo;
     String name, phone, email;
     PDFGeneration pdfGeneration;
+    Context context;
 
 
-
-    public PreviousJobcardAdapter(ArrayList<ArrayList<String>> complaint, ArrayList<ArrayList<String>> spares, ArrayList<String> date, ArrayList<Integer> totalEstimate, String carRegNo, String name, String phone, String email) {
+    public PreviousJobcardAdapter(ArrayList<ArrayList<String>> complaint, ArrayList<ArrayList<String>> spares, ArrayList<String> date, ArrayList<Integer> totalEstimate, String carRegNo, String name, String phone, String email, Context context) {
         this.complaint = complaint;
         this.spares = spares;
         this.date = date;
@@ -42,6 +47,7 @@ public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcard
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.context = context;
     }
 
     @NonNull
@@ -68,6 +74,11 @@ public class PreviousJobcardAdapter extends RecyclerView.Adapter<PreviousJobcard
                     public void run() {
                         try {
                             pdfGeneration.GeneratePDF();
+                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), carRegNo+"_"+date.get(position)+".pdf");
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setDataAndType(FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file), "application/pdf");
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            context.startActivity(intent);
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (DocumentException e) {

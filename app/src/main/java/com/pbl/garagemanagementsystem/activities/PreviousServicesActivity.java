@@ -94,7 +94,7 @@ public class PreviousServicesActivity extends AppCompatActivity implements OnCom
     @Override
     public void run() {
 
-        PreviousJobcardAdapter adapter = new PreviousJobcardAdapter(complaint, spares, date, TotalEstimate, carRegNo, name, contactNo, email);
+        PreviousJobcardAdapter adapter = new PreviousJobcardAdapter(complaint, spares, date, TotalEstimate, carRegNo, name, contactNo, email, this);
         recyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
